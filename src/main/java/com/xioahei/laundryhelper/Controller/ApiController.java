@@ -2,6 +2,7 @@ package com.xioahei.laundryhelper.Controller;
 
 import com.xioahei.laundryhelper.Utils.ApiUtil;
 import com.xioahei.laundryhelper.Service.Service;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +14,12 @@ import java.io.IOException;
 import java.util.Base64;
 @CrossOrigin
 @RestController
-public class Api {
-    @Autowired
+public class ApiController {
+    @Resource
     Service service;
+    @Resource
+    ApiUtil apiUtil;
+
     @PostMapping("/upload")
     public String answer(@RequestParam("images") MultipartFile[] files) {
         if (files == null || files.length == 0) {
@@ -42,7 +46,7 @@ public class Api {
             // 保存文件逻辑
             // file.transferTo(new File("存储路径/" + fileName));
         }
-        String answer = ApiUtil.getContent(TempQuestion.toString());
+        String answer = apiUtil.getContent(TempQuestion.toString());
         System.out.println(answer);
         return answer;
     }
